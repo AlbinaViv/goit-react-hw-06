@@ -1,8 +1,11 @@
 import css from "./Contact.module.css";
 import { CgGirl } from "react-icons/cg";
 import { BsFillTelephoneFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { deleteContactAction } from "../../redux/contacts/contacts.slice";
 
-export const Contact = ({ name, number, deleteHandler, id }) => {
+export const Contact = ({ name, number, id }) => {
+  const dispatch = useDispatch();
   return (
     <li className={css.contact}>
       <p className={css.content}>
@@ -14,7 +17,7 @@ export const Contact = ({ name, number, deleteHandler, id }) => {
         {number}
       </p>
       <button
-        onClick={() => deleteHandler(id)}
+        onClick={() => dispatch(deleteContactAction(id))}
         type="button"
       >
         Delete

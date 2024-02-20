@@ -3,6 +3,8 @@ import * as Yup from "yup";
 import { useId } from "react";
 
 import css from "./ContactForm.module.css";
+import { useDispatch } from "react-redux";
+import { addContactAction } from "../../redux/contacts/contacts.slice";
 
 const userSchema = Yup.object().shape({
   name: Yup.string()
@@ -15,9 +17,11 @@ const userSchema = Yup.object().shape({
     .required("Required"),
 });
 
-export const ContactForm = ({ onAdd }) => {
+export const ContactForm = () => {
   const usernameFildeId = useId();
   const userphoneFildeId = useId();
+
+  const dispatch = useDispatch();
 
   // const handleSubmit = (evt) => {
   //   evt.preventDefault();
@@ -51,7 +55,8 @@ export const ContactForm = ({ onAdd }) => {
       onSubmit={(values, actions) => {
         // const updedvalues = { ...values, number: Number(values.number) };
         // onAdd({ id: Date.now(), ...updedvalues });
-        onAdd({ ...values });
+        const contact = { ...values, id: Date.now() };
+        dispatch(addContactAction(contact));
 
         actions.resetForm();
       }}
